@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="{{ configuracion.idioma_predeterminado|default:'es' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if configuracion and configuracion.meta_titulo %}
+            {{ configuracion.meta_titulo }}
+        {% elif configuracion %}
+            {{ configuracion.nombre_hotel }}
+        {% else %}
+            Hotel
+        {% endif %}
+    </title>
+
+    {% if configuracion and configuracion.meta_descripcion %}
+        <meta name="description" content="{{ configuracion.meta_descripcion }}">
+    {% endif %}
+
+    {% if configuracion and configuracion.url_favicon %}
+        <link rel="icon" href="{{ configuracion.url_favicon }}">
+    {% endif %}
+
+    {# Open Graph #}
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="{{ configuracion.idioma_predeterminado|default:'es' }}">
+    {% if configuracion %}
+        <meta property="og:site_name" content="{{ configuracion.nombre_hotel }}">
+        <meta property="og:title" content="{{ configuracion.meta_titulo|default:configuracion.nombre_hotel }}">
+        {% if configuracion.meta_descripcion %}
+            <meta property="og:description" content="{{ configuracion.meta_descripcion }}">
+        {% endif %}
+        {% if configuracion.url_logo %}
+            <meta property="og:image" content="{{ configuracion.url_logo }}">
+        {% endif %}
+    {% endif %}
+
+    {# Preload del hero para mejorar LCP #}
+    {% if hero and hero.url_poster %}
+        <link rel="preload" as="image" href="{{ hero.url_poster }}">
+    {% endif %}
+
+    {# Schema markup #}
+    {% if configuracion %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Hotel",
+        "name": "{{ configuracion.nombre_hotel }}"
+        {% if configuracion.meta_descripcion %},"description": "{{ configuracion.meta_descripcion }}"{% endif %}
+        {% if configuracion.url_logo %},"logo": "{{ configuracion.url_logo }}","image": "{{ configuracion.url_logo }}"{% endif %}
+        {% if contacto %}
+        ,"address": {
+            "@type": "PostalAddress"
+            {% if contacto.direccion %},"streetAddress": "{{ contacto.direccion }}"{% endif %}
+            {% if contacto.ciudad %},"addressLocality": "{{ contacto.ciudad }}"{% endif %}
+            {% if contacto.estado_region %},"addressRegion": "{{ contacto.estado_region }}"{% endif %}
+            {% if contacto.pais %},"addressCountry": "{{ contacto.pais }}"{% endif %}
+            {% if contacto.codigo_postal %},"postalCode": "{{ contacto.codigo_postal }}"{% endif %}
+        }
+        {% if contacto.telefono %},"telephone": "{{ contacto.telefono }}"{% endif %}
+        {% if contacto.correo_electronico %},"email": "{{ contacto.correo_electronico }}"{% endif %}
+        {% if contacto.hora_check_in %},"checkinTime": "{{ contacto.hora_check_in }}"{% endif %}
+        {% if contacto.hora_check_out %},"checkoutTime": "{{ contacto.hora_check_out }}"{% endif %}
+        {% if contacto.latitud and contacto.longitud %}
+        ,"geo": {"@type": "GeoCoordinates","latitude": "{{ contacto.latitud }}","longitude": "{{ contacto.longitud }}"}
+        {% endif %}
+        {% endif %}
+        ,"url": "{{ request.build_absolute_uri }}"
+    }
+    </script>
+    {% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Colores base — siempre presentes
+        const hotelColors = {
+            hotelDark:   "#1f1f1f",
+            hotelBeige:  "#f5f1ea",
+            hotelGold:   "#b89b72",
+            hotelBlue:   "#000958",
+            hotelOrange: "#f9a23b",
+            hotelPurple: "#673065",
+        };
+
+        // Sobreescribir con valores del modelo si existen
+        {% if configuracion and configuracion.color_primario %}
+            hotelColors.hotelPurple = "{{ configuracion.color_primario }}";
+        {% endif %}
+        {% if configuracion and configuracion.color_secundario %}
+            hotelColors.hotelBlue = "{{ configuracion.color_secundario }}";
+        {% endif %}
+        {% if configuracion and configuracion.color_acento %}
+            hotelColors.hotelGold = "{{ configuracion.color_acento }}";
+        {% endif %}
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: hotelColors,
+                    fontFamily: {
+                        sans:      ["Nunito Sans", "sans-serif"],
+                        serif:     ["Cormorant Garamond", "serif"],
+                        condensed: ["Barlow Condensed", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+    {% block content %}{% endblock %}
+</body>
+</html>
