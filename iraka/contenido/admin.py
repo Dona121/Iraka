@@ -60,6 +60,7 @@ class ImagenExperienciaInline(StackedInline):
 
 @admin.register(ConfiguracionSitio)
 class ConfiguracionSitioAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["nombre_hotel", "vista_previa_logo", "idioma_predeterminado", "creado_en", "actualizado_en"]
     search_fields = ["nombre_hotel", "eslogan", "meta_titulo"]
     fieldsets = (
@@ -83,6 +84,7 @@ class ConfiguracionSitioAdmin(UnfoldModelAdmin):
 
 @admin.register(SeccionHero)
 class SeccionHeroAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["titulo", "vista_previa_poster", "esta_activo", "creado_en", "actualizado_en"]
     list_filter = ["esta_activo"]
     search_fields = ["titulo", "subtitulo"]
@@ -109,6 +111,7 @@ class SeccionHeroAdmin(UnfoldModelAdmin):
 
 @admin.register(SeccionAcercaDe)
 class SeccionAcercaDeAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["titulo", "esta_activo", "creado_en", "actualizado_en"]
     list_filter = ["esta_activo"]
     search_fields = ["titulo", "subtitulo", "descripcion"]
@@ -143,6 +146,7 @@ class SeccionAcercaDeAdmin(UnfoldModelAdmin):
 
 @admin.register(Amenidad)
 class AmenidadAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["nombre", "icono", "esta_activo", "creado_en", "actualizado_en"]
     list_filter = ["esta_activo"]
     search_fields = ["nombre", "descripcion", "icono"]
@@ -157,6 +161,7 @@ class AmenidadAdmin(UnfoldModelAdmin):
 
 @admin.register(Habitacion)
 class HabitacionAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["nombre", "capacidad", "tipo_cama", "es_destacada", "esta_activo", "orden_mostrar", "creado_en"]
     list_filter = ["es_destacada", "esta_activo"]
     search_fields = ["nombre", "slug", "descripcion_corta", "descripcion_completa", "tipo_cama", "tipo_vista"]
@@ -174,6 +179,7 @@ class HabitacionAdmin(UnfoldModelAdmin):
 
 @admin.register(ImagenHabitacion)
 class ImagenHabitacionAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["habitacion", "vista_previa", "es_portada", "orden_mostrar", "creado_en"]
     list_filter = ["es_portada", "habitacion"]
     search_fields = ["habitacion__nombre", "texto_alternativo", "url_imagen"]
@@ -198,6 +204,7 @@ class ImagenHabitacionAdmin(UnfoldModelAdmin):
 
 @admin.register(HabitacionAmenidad)
 class HabitacionAmenidadAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["habitacion", "amenidad", "creado_en"]
     list_filter = ["amenidad"]
     search_fields = ["habitacion__nombre", "amenidad__nombre"]
@@ -211,6 +218,7 @@ class HabitacionAmenidadAdmin(UnfoldModelAdmin):
 
 @admin.register(Experiencia)
 class ExperienciaAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["titulo", "nombre_huesped", "fuente", "calificacion", "es_destacada", "esta_activo", "orden_mostrar", "creado_en"]
     list_filter = ["fuente", "es_destacada", "esta_activo"]
     search_fields = ["titulo", "nombre_huesped", "ubicacion_huesped", "comentario", "etiqueta_fuente"]
@@ -227,6 +235,7 @@ class ExperienciaAdmin(UnfoldModelAdmin):
 
 @admin.register(ImagenExperiencia)
 class ImagenExperienciaAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["experiencia", "vista_previa", "orden_mostrar", "creado_en"]
     list_filter = ["experiencia"]
     search_fields = ["experiencia__titulo", "experiencia__nombre_huesped", "texto_alternativo", "url_imagen"]
@@ -251,6 +260,7 @@ class ImagenExperienciaAdmin(UnfoldModelAdmin):
 
 @admin.register(EnlaceReserva)
 class EnlaceReservaAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["nombre_plataforma", "tipo_plataforma", "es_principal", "esta_activo", "orden_mostrar", "creado_en"]
     list_filter = ["tipo_plataforma", "es_principal", "esta_activo"]
     search_fields = ["nombre_plataforma", "descripcion", "texto_boton", "url"]
@@ -266,6 +276,7 @@ class EnlaceReservaAdmin(UnfoldModelAdmin):
 
 @admin.register(InformacionContacto)
 class InformacionContactoAdmin(UnfoldModelAdmin):
+    list_select_related = True
     list_display = ["correo_electronico", "telefono", "whatsapp", "ciudad", "pais", "creado_en", "actualizado_en"]
     search_fields = ["direccion", "barrio", "ciudad", "pais", "telefono", "whatsapp", "correo_electronico"]
     fieldsets = (
