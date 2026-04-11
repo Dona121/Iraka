@@ -4,4 +4,3 @@ uv.lock
 .python-version
 __pycache__
 db.sqlite3
-staticfiles/
