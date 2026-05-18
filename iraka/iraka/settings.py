@@ -158,7 +158,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
     "https://iraka-production.up.railway.app",  # sin / al final
     "https://chase-nondrinkable-editorially.ngrok-free.dev",
-    "https://iraka.up.railway.app/"
+    "https://iraka.up.railway.app/",
+    "https://irakahotelzenu.com"
 ]
 
 
